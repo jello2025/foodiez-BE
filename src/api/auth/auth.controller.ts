@@ -9,8 +9,8 @@ export const register = async (
   next: NextFunction
 ) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { email, password, username } = req.body;
+    if (!email || !password || !username) {
       next({
         status: 400,
         message: "missing creds",
@@ -19,15 +19,16 @@ export const register = async (
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const newUser = await User.create({ username, passwaord: hashedPassword });
+    const newUser = await User.create({ email, passwaord: hashedPassword });
 
-    const payload = { userId: newUser._id, username: username };
+    const payload = { userId: newUser._id, email: email, username: username };
     const secret = env.JWT_SECRET;
     const options = { expiresIn: env.JWT_EXP } as jwt.SignOptions;
     const token = jwt.sign(payload, secret as string, options);
 
     res.status(201).json({
       username: username,
+      email: email,
       password: hashedPassword,
       token: token,
     });
@@ -42,15 +43,15 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { email, password, username } = req.body;
+    if (!email || !password || !username) {
       next({
         status: 400,
         message: "missing creds",
       });
     }
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return next({
         status: 404,
@@ -67,7 +68,7 @@ export const login = async (
       });
     }
 
-    const payload = { userId: user._id, username: username };
+    const payload = { userId: user._id, email: email, username: username };
     const secret = env.JWT_SECRET;
     const options = { expiresIn: env.JWT_EXP } as jwt.SignOptions;
     const token = jwt.sign(payload, secret as string, options);
