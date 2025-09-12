@@ -7,7 +7,7 @@ import {
   createCategory,
 } from "./category.controller";
 
-const categoryRouter = Router();
+export const categoryRouter = Router();
 
 categoryRouter.get("/", getAllCategories);
 categoryRouter.get("/:categoryId", getCategoryById);

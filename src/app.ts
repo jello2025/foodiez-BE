@@ -9,6 +9,8 @@ import { errorHandler } from "./middlewares/errorHandler";
 import { authRouter } from "./api/auth/auth.routes";
 import { profileRouter } from "./api/profile/profiles.routes";
 import { recipeRouter } from "./api/recipe/recipe.routes";
+import { categoryRouter } from "./api/Category/category.routes";
+import { ingredientRouter } from "./api/Ingredient/ingredient.routes";
 const app = express();
 dotenv.config();
 app.use(express.json());
@@ -19,6 +21,8 @@ connectDB();
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/recipe", recipeRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/ingredient", ingredientRouter);
 const PORT = env.PORT || "5000";
 const DB_URL = env.DB_URL;
 

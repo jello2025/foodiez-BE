@@ -5,3 +5,7 @@ export const IngredientSchema = new Schema({
   recipe: [{ type: Schema.ObjectId, ref: "Recipe" }],
   amount: { type: String, required: true },
 });
+
+const Ingredient = model("Ingredient", IngredientSchema);
+
+export default Ingredient;

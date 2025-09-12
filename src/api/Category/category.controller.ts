@@ -7,7 +7,7 @@ export const getAllCategories = async (
   next: NextFunction
 ) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate("recipe");
     res.status(200).json(categories);
   } catch (err) {
     next(err);
@@ -21,7 +21,9 @@ export const getCategoryById = async (
 ) => {
   const { categoryId } = req.params;
   try {
-    const foundCategory = await Category.findById(categoryId);
+    const foundCategory = await Category.findById(categoryId).populate(
+      "recipe"
+    );
     if (foundCategory) {
       return res.status(200).json(foundCategory);
     } else {
