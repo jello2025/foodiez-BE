@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Recipe from "../../../models/Recipe";
-
+import Recipe from "../../models/Recipe";
 export const createRecipe = async (
   req: Request,
   res: Response,
