@@ -7,7 +7,8 @@ export const createRecipe = async (
   next: NextFunction
 ) => {
   try {
-    const newRecipe = await Recipe.create(req.body);
+    const imagePath = req.file ? req.file.path : null;
+    const newRecipe = await Recipe.create({ ...req.body, image: imagePath });
     res.status(201).json(newRecipe);
   } catch (err) {
     next(err);
