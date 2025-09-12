@@ -19,7 +19,11 @@ export const register = async (
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const newUser = await User.create({ email, passwaord: hashedPassword });
+    const newUser = await User.create({
+      email,
+      password: hashedPassword,
+      username,
+    });
 
     const payload = { userId: newUser._id, email: email, username: username };
     const secret = env.JWT_SECRET;
@@ -59,7 +63,7 @@ export const login = async (
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user?.passwaord as string);
+    const isMatch = await bcrypt.compare(password, user?.password as string);
 
     if (!isMatch) {
       next({

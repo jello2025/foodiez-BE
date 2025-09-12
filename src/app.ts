@@ -7,7 +7,8 @@ import { env } from "./config/env";
 import { notFound } from "./middlewares/notFound";
 import { errorHandler } from "./middlewares/errorHandler";
 import { authRouter } from "./api/auth/auth.routes";
-
+import { profileRouter } from "./api/auth/profile/profiles.routes";
+import { recipeRouter } from "./api/auth/recipe/recipe.routes";
 const app = express();
 dotenv.config();
 app.use(express.json());
@@ -16,7 +17,8 @@ app.use(morgan("dev"));
 connectDB();
 
 app.use("/api/auth", authRouter);
-
+app.use("/api/auth/profile", profileRouter);
+app.use("/api/auth/recipe", recipeRouter);
 const PORT = env.PORT || "5000";
 const DB_URL = env.DB_URL;
 
