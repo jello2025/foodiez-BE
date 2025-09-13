@@ -5,6 +5,7 @@ const RecipeSchema = new Schema({
   instructions: { type: String, required: true },
   prepTime: { type: String, required: true },
   serving: { type: Number, required: true },
+  description: { type: String, required: true },
   image: { type: String },
   ingredient: [{ type: Schema.ObjectId, ref: "Ingredient" }],
   category: { type: Schema.ObjectId, ref: "Category" },
